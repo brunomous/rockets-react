@@ -2,6 +2,7 @@ import React from 'react';
 
 import type { RJSFSchema, UiSchema } from '@rjsf/utils';
 import type { IChangeEvent } from '@rjsf/core';
+import { useIntl } from 'react-intl';
 
 import type { AdvancedProperty } from '../../SchemaForm/types';
 import type { ValidationRule } from '../../../utils/form/validation';
@@ -21,6 +22,8 @@ import Image from '../../../components/Image';
 import { CustomTextFieldWidget } from '../../../styles/CustomWidgets';
 
 import { validateForm } from '../../../utils/form/validation';
+
+import { withTranslations } from '../../../utils/i18n';
 
 import {
   defaultAuthUiSchema,
@@ -56,6 +59,8 @@ interface AuthFormSubmoduleProps {
 }
 
 const AuthFormSubmodule = (props: AuthFormSubmoduleProps) => {
+  const { formatMessage: f } = useIntl();
+
   const [formData, setFormData] = useState<Record<string, unknown>>({});
 
   const searchParams = useSearchParams();
@@ -106,7 +111,7 @@ const AuthFormSubmodule = (props: AuthFormSubmoduleProps) => {
   const isLoading = isLoadingSignIn || isLoadingRequest;
 
   const defaultRouteTitle = {
-    signIn: 'Sign in',
+    signIn: f({ id: 'simple' }),
     signUp: 'Sign up',
     forgotPassword: 'Recover password',
     resetPassword: 'Reset password',
@@ -216,4 +221,4 @@ const AuthFormSubmodule = (props: AuthFormSubmoduleProps) => {
   );
 };
 
-export default AuthFormSubmodule;
+export default withTranslations(AuthFormSubmodule);
