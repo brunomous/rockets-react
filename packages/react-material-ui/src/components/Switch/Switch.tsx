@@ -1,7 +1,10 @@
 import React from 'react';
-import MuiSwitch, { SwitchProps } from '@mui/material/Switch';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  Switch as MuiSwitch,
+  SwitchProps,
+  FormGroup,
+  FormControlLabel,
+} from '@mui/material';
 import Text from '../Text';
 import { TextProps } from 'interfaces';
 

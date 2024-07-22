@@ -1,11 +1,10 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Box from '@mui/material/Box';
+import { IconButton, Box, SxProps, Theme } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
+
 import Notifications from '../Notifications';
 import Text from '../Text';
 import HeaderAccount, { HeaderAccountProps } from '../HeaderAccount';
-import { SxProps, Theme } from '@mui/material/styles';
 
 export type NavbarProps = {
   drawerToggle?: () => void;

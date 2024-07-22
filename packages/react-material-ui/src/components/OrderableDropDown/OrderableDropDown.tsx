@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, ReactNode } from 'react';
-import ListItem from '@mui/material/ListItem';
+import { ListItem } from '@mui/material';
 
 import {
   Box,

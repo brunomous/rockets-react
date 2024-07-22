@@ -1,4 +1,4 @@
-import { TypographyProps } from '@mui/material/Typography';
+import { TypographyProps } from '@mui/material';
 
 export interface TextProps {
   fontFamily?: TypographyProps['fontFamily'];

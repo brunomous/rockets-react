@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import Box from '@mui/material/Box';
-import TableCell, { TableCellProps } from '@mui/material/TableCell';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import { Box, TableCell, TableCellProps, TableSortLabel } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTableRoot } from '../hooks/useTableRoot';
 import { HeaderProps, Order } from '../types';

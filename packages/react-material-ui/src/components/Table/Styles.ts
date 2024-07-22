@@ -1,6 +1,4 @@
-import MuiTable from '@mui/material/Table';
-import { styled, Theme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { Table as MuiTable, styled, Theme, Box } from '@mui/material';
 
 export type TableProps = {
   variant?: 'clean' | 'contained' | 'outlined';

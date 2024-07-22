@@ -1,8 +1,9 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Box, IconButton } from '@mui/material';
+import {
+  AddCircleOutline as AddCircleOutlineIcon,
+  DeleteOutline as DeleteOutlineIcon,
+} from '@mui/icons-material';
 
 type Props = {
   type: 'add' | 'remove';

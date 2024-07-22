@@ -1,16 +1,17 @@
 import React, { useState, useCallback, useEffect, ReactNode } from 'react';
-import { darken } from '@mui/material/styles';
 import { StyledDrawer, StyledDrawerProps } from './Styles';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeft from '@mui/icons-material/ChevronLeft';
-import ChevronRight from '@mui/icons-material/ChevronRight';
+import {
+  darken,
+  SxProps,
+  Theme,
+  Toolbar,
+  IconButton,
+  Box,
+} from '@mui/material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import DrawerItem, { DrawerItemProps } from './DrawerItem';
 import Image from '../Image';
-import Text from '../Text';
-import Box from '@mui/material/Box';
 import { TextProps } from 'interfaces';
-import { SxProps, Theme } from '@mui/material/styles';
 
 export type DrawerProps = {
   items: DrawerItemProps[];

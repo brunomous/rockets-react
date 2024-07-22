@@ -7,8 +7,7 @@ import {
   RJSFSchema,
   StrictRJSFSchema,
 } from '@rjsf/utils';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from '@mui/material';
 import ArrayFieldActionButton from './ArrayFieldActionButton';
 
 function ArrayFieldTemplate<

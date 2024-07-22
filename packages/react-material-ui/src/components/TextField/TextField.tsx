@@ -7,10 +7,9 @@ import {
   TextField as MuiTextField,
   TextFieldProps,
   TypographyProps,
+  IconButton,
 } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormLabel from '../FormLabel';
 import { getPasswordMatchInfo, getPasswordScore } from './utils';
 import {

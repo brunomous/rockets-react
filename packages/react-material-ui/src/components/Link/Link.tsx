@@ -1,5 +1,5 @@
 import React from 'react';
-import MuiLink, { LinkProps } from '@mui/material/Link';
+import { Link as MuiLink, LinkProps } from '@mui/material';
 
 const Link = (props: LinkProps) => {
   const { children, color = 'primary.dark', sx } = props;

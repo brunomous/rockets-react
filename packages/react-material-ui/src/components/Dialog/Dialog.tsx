@@ -1,9 +1,11 @@
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import { DialogProps } from '@mui/material/Dialog';
+import {
+  useTheme,
+  useMediaQuery,
+  DialogContent,
+  DialogActions,
+  DialogProps,
+} from '@mui/material';
 import { CustomDialog, CustomDialogTitle } from './Styles';
 
 export interface CustomDialogProps {

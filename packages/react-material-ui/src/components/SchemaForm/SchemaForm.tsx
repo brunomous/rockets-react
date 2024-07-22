@@ -3,7 +3,7 @@
 import React, { Fragment, ReactNode } from 'react';
 import validator from '@rjsf/validator-ajv6';
 import RJSFForm from '@rjsf/mui';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { RJSFSchema } from '@rjsf/utils';
 import { FormProps } from '@rjsf/core';
 

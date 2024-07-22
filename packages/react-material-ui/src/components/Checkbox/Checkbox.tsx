@@ -1,7 +1,10 @@
 import React from 'react';
-import MuiCheckbox, { CheckboxProps } from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  Checkbox as MuiCheckbox,
+  CheckboxProps,
+  FormGroup,
+  FormControlLabel,
+} from '@mui/material';
 import Text from '../Text';
 import { TextProps } from 'interfaces';
 

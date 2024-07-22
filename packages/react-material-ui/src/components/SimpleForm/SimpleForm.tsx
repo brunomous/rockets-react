@@ -1,8 +1,6 @@
 import React, { FC, Fragment } from 'react';
 import { Text } from '../../';
-import Box from '@mui/material/Box';
-import Button, { ButtonProps } from '@mui/material/Button';
-import { TypographyProps } from '@mui/material/Typography';
+import { Box, Button, ButtonProps, TypographyProps } from '@mui/material';
 import { RJSFSchema, UiSchema, FormValidation, WidgetProps } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv6';
 import Form from '@rjsf/mui';

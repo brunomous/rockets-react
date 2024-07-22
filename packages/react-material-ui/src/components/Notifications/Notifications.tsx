@@ -1,7 +1,6 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
 import NotificationsOutlined from '@mui/icons-material/NotificationsOutlined';
-import Badge from '@mui/material/Badge';
+import { IconButton, Badge } from '@mui/material';
 
 type Props = {
   amount: number;

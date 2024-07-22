@@ -1,13 +1,10 @@
 import React, { ReactNode, useState, MouseEvent, useMemo } from 'react';
-import Menu from '@mui/material/Menu';
-import Fade from '@mui/material/Fade';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Box from '@mui/material/Box';
+import { Menu, Fade, Tooltip, IconButton, Box, MenuItem } from '@mui/material';
+import {
+  MoreHoriz as MoreHorizIcon,
+  MoreVert as MoreVertIcon,
+} from '@mui/icons-material';
 import { IconContainer } from './Styles';
-import MenuItem from '@mui/material/MenuItem';
 import Text from '../Text';
 import { TextProps } from 'interfaces';
 

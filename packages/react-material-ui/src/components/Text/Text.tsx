@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import { Typography, TypographyProps } from '@mui/material';
 
 const Text = (props: TypographyProps) => {
   const { children, fontWeight = '300' } = props;

@@ -1,9 +1,14 @@
 import React, { ReactNode } from 'react';
-import { useTheme } from '@mui/material';
-import { SxProps, Theme } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import MuiDrawer, { DrawerProps } from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
+import {
+  Box,
+  SxProps,
+  useTheme,
+  Theme,
+  Drawer as MuiDrawer,
+  DrawerProps,
+  IconButton,
+} from '@mui/material';
+
 import Close from '@mui/icons-material/Close';
 import Text from '../Text';
 import { TextProps } from 'interfaces';

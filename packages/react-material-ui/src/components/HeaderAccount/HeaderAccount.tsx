@@ -1,11 +1,9 @@
 import React, { useState, ReactNode } from 'react';
-import Box from '@mui/material/Box';
+import { Box, Button, Menu } from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
 import Text from '../Text';
 import { Avatar } from '../Avatar';
 import { TextProps } from 'interfaces';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
 
 export type HeaderAccountProps = {
   avatar?: string;

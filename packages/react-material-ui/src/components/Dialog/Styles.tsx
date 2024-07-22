@@ -1,9 +1,12 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import {
+  styled,
+  Dialog,
+  DialogProps,
+  DialogTitle,
+  IconButton,
+} from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
 
 const CustomDialog = styled(Dialog, {
   // prevent jest error

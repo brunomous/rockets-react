@@ -1,6 +1,5 @@
 import { JSONSchema7 } from 'json-schema';
-import TypographyProps from '@mui/material/Typography';
-import { ButtonProps } from '@mui/material/Button';
+import { TypographyProps, ButtonProps } from '@mui/material';
 
 type AdvancedFieldType =
   | 'string'
@@ -34,6 +33,6 @@ export type AdvancedPropertiesMapper = (
 export type FormLayout = {
   title?: string;
   submitButtonLabel?: string;
-  titleTextProps?: typeof TypographyProps;
+  titleTextProps?: TypographyProps;
   submitButtonProps?: ButtonProps;
 };

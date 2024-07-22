@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { Image } from './Styles';
 import Text from '../Text';
 
@@ -26,12 +26,12 @@ export type AvatarProps = {
  * profile picture or initials. It supports various features such as image
  * source handling, fallbacks (e.g., initials or default image),
  * and customization options for styling and sizes.
- * 
+ *
  * @see [Storybook - Avatar](https://storybook.rockets.tools/?path=/docs/avatar)
- * 
+ *
  * @example
  * ```tsx
- * <Avatar 
+ * <Avatar
  *   src="https://example.com/nonexistent.jpg"
  *   alt="Annabel B"
  *   initials="AB"
@@ -39,7 +39,7 @@ export type AvatarProps = {
  *   backgroundColor="#789abc"
  * />
  * ```
- * 
+ *
  * @param props - Avatar component props
  */
 export const Avatar = (props: AvatarProps) => {

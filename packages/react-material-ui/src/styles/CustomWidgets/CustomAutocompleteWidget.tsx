@@ -1,5 +1,9 @@
 import React, { SyntheticEvent, useEffect, useMemo } from 'react';
-import { TextFieldProps } from '@mui/material/TextField';
+import {
+  TextFieldProps,
+  Autocomplete,
+  createFilterOptions,
+} from '@mui/material';
 import {
   ariaDescribedByIds,
   labelValue,
@@ -8,7 +12,6 @@ import {
   StrictRJSFSchema,
   WidgetProps,
 } from '@rjsf/utils';
-import { Autocomplete, createFilterOptions } from '@mui/material';
 import useDataProvider, { useQuery } from '@concepta/react-data-provider';
 import FormFieldSkeleton from '../../components/FormFieldSkeleton';
 import { allOption } from '../../components/SelectField/SelectField';

@@ -1,9 +1,10 @@
 import React from 'react';
-import MuiThemeProvider, {
-  ThemeProviderProps,
-} from '@mui/material/styles/ThemeProvider';
-import CssBaseline from '@mui/material/CssBaseline';
-import { StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
+import {
+  ThemeProvider as MuiThemeProvider,
+  CssBaseline,
+  StyledEngineProvider,
+} from '@mui/material';
 
 const ThemeProvider = (props: ThemeProviderProps) => {
   return (

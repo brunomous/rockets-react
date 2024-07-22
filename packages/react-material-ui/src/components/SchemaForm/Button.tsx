@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import MUIButton from '@mui/material/Button';
+import { Button as MUIButton } from '@mui/material';
 
 const Button = ({ children }: PropsWithChildren) => (
   <MUIButton type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>

@@ -1,9 +1,7 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { alpha } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import { alpha, Toolbar, Typography } from '@mui/material';
 
 interface TableToolbarProps {
   numSelected: number;

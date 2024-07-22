@@ -1,5 +1,5 @@
 import React, { FocusEvent } from 'react';
-import { TextFieldProps } from '@mui/material/TextField';
+import { TextFieldProps } from '@mui/material';
 import {
   ariaDescribedByIds,
   BaseInputTemplateProps,
