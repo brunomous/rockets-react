@@ -57,6 +57,12 @@ export type DrawerProps = {
   collapsedWidth?: StyledDrawerProps['collapsedWidth'];
   /** Width of the drawer when expanded */
   expandedWidth?: StyledDrawerProps['expandedWidth'];
+  /** Custom styles for the drawer, following the [sx](https://mui.com/system/getting-started/the-sx-prop/) */
+  rootSx?: StyledDrawerProps['sx'];
+  /** Custom styles for the drawer, following the [sx](https://mui.com/system/getting-started/the-sx-prop/) */
+  paperSx?: StyledDrawerProps['sx'];
+  /** Additional content rendered below the logo */
+  addittionalContent: ReactNode;
 };
 
 /**
@@ -103,6 +109,9 @@ export const Drawer = (props: DrawerProps) => {
     activeIconColor,
     collapsedWidth,
     expandedWidth,
+    rootSx,
+    paperSx,
+    addittionalContent,
   } = props;
   const [_collapsed, _setCollapsed] = useState<boolean>(collapsed);
 
@@ -135,6 +144,8 @@ export const Drawer = (props: DrawerProps) => {
       >
         {renderLogo()}
       </Toolbar>
+
+      {addittionalContent}
 
       {items?.map((item, i) => {
         const isActive = !!currentId && currentId.startsWith(item.id);
@@ -223,7 +234,9 @@ export const Drawer = (props: DrawerProps) => {
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
+            ...(paperSx as any),
           },
+          ...(rootSx as any),
         }}
         horizontal={horizontal}
         backgroundColor={backgroundColor}
@@ -240,7 +253,9 @@ export const Drawer = (props: DrawerProps) => {
           display: { xs: 'none', sm: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
+            ...(paperSx as any),
           },
+          ...(rootSx as any),
         }}
         open={!_collapsed}
         horizontal={horizontal}

@@ -13,7 +13,7 @@ export type AppBarRootProps = {
 /**
  * The AppBarRoot component acts as a wrapper for the context API shared
  * with the other parts of the AppBar composition.
- * 
+ *
  * @see {@link AppBar}
  * @param props - Component props.
  */
