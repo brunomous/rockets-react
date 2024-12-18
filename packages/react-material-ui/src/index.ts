@@ -89,3 +89,8 @@ export { default as OtpInput } from './components/OtpInput';
 export { default as Breadcrumbs } from './components/Breadcrumbs';
 
 export { FormLabel, FormLabelProps } from './components/FormLabel';
+
+export {
+  default as DateRangePicker,
+  DateRangePickerProps,
+} from './components/DateRangePicker';
