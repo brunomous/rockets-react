@@ -2,14 +2,23 @@ import React, { useState, useRef, FieldsetHTMLAttributes } from 'react';
 import {
   Box,
   Popover,
+  Button,
   Typography,
   Grid,
   IconButton,
   SxProps,
   ClickAwayListener,
   FormHelperText,
+  Stack,
 } from '@mui/material';
-import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
+import { alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import {
+  DateCalendar,
+  PickersDay,
+  PickersDayProps,
+  PickersCalendarHeaderProps,
+} from '@mui/x-date-pickers';
 import {
   isWithinInterval,
   isSameDay,
@@ -46,12 +55,52 @@ const hiddenButtonSx = {
   display: 'none',
 };
 
-const DateRangePicker = ({
-  label,
-  sx,
-  error,
-  ...props
-}: DateRangePickerProps) => {
+const CustomCalendarHeaderRoot = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '8px 16px',
+  alignItems: 'center',
+});
+
+function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
+  const { currentMonth } = props;
+
+  const selectPreviousMonth = () => null;
+
+  return (
+    <CustomCalendarHeaderRoot>
+      <Stack spacing={1} direction="row">
+        <IconButton onClick={selectPreviousMonth} title="Previous month">
+          <ChevronLeft />
+        </IconButton>
+      </Stack>
+      <Typography variant="body2">
+        {format(currentMonth, 'MMMM YYYY')}
+      </Typography>
+    </CustomCalendarHeaderRoot>
+  );
+}
+
+function CustomEndCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
+  const { currentMonth } = props;
+
+  const selectNextMonth = () => null;
+
+  return (
+    <CustomCalendarHeaderRoot>
+      <Typography variant="body2">
+        {format(currentMonth, 'MMMM YYYY')}
+      </Typography>
+      <Stack spacing={1} direction="row">
+        <IconButton onClick={selectNextMonth} title="Next month">
+          <ChevronRight />
+        </IconButton>
+      </Stack>
+    </CustomCalendarHeaderRoot>
+  );
+}
+
+const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
 
   const hiddenStartCalendarButtonRef = useRef<HTMLButtonElement>(null);
@@ -73,6 +122,7 @@ const DateRangePicker = ({
   const [dateSelectionMode, setDateSelectionMode] = useState<DateSelectionMode>(
     DateSelectionMode.FROM,
   );
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleOpen = () => {
     startDateInputRef?.current?.focus();
@@ -102,6 +152,7 @@ const DateRangePicker = ({
         end: endOfDay(hoveredDate),
       });
     }
+
     return false;
   };
 
@@ -112,13 +163,10 @@ const DateRangePicker = ({
 
     setStartDateInputValue(date);
     setDateRange({
+      ...dateRange,
       startDate: addDays(new Date(date), 1),
-      endDate: isAfterEndDate ? null : dateRange.endDate,
     });
-
-    if (isAfterEndDate) {
-      setEndDateInputValue('');
-    }
+    setErrorMessage(isAfterEndDate ? 'Invalid range' : '');
   };
 
   const handleEndDateChange = (date: string) => {
@@ -128,38 +176,26 @@ const DateRangePicker = ({
 
     setEndDateInputValue(date);
     setDateRange({
-      startDate: isBeforeStartDate ? null : dateRange.startDate,
+      ...dateRange,
       endDate: addDays(new Date(date), 1),
     });
-
-    if (isBeforeStartDate) {
-      setStartDateInputValue('');
-    }
+    setErrorMessage(isBeforeStartDate ? 'Invalid range' : '');
   };
 
   const handleDateSelection = (date: Date | null) => {
     setDateRange((prev) => {
       if (dateSelectionMode === DateSelectionMode.FROM) {
-        if (prev.endDate && date && date > prev.endDate) {
-          // If "from" date is after the current "to" date, clear "to" date
-          setStartDateInputValue(format(date, 'yyyy-MM-dd'));
-          setEndDateInputValue('');
+        const isAfterEndDate = prev.endDate && date && date > prev.endDate;
 
-          return { startDate: date, endDate: null };
-        }
-
+        setErrorMessage(isAfterEndDate ? 'Invalid range' : '');
         setStartDateInputValue(date ? format(date, 'yyyy-MM-dd') : '');
 
         return { ...prev, startDate: date };
       } else if (dateSelectionMode === DateSelectionMode.TO) {
-        if (prev.startDate && date && date < prev.startDate) {
-          // If "to" date is before the "from" date, reset selection to "from"
-          setEndDateInputValue(format(date, 'yyyy-MM-dd'));
-          setStartDateInputValue('');
+        const isBeforeStartDate =
+          prev.startDate && date && date < prev.startDate;
 
-          return { startDate: null, endDate: date };
-        }
-
+        setErrorMessage(isBeforeStartDate ? 'Invalid range' : '');
         setEndDateInputValue(date ? format(date, 'yyyy-MM-dd') : '');
 
         return { ...prev, endDate: date };
@@ -177,7 +213,7 @@ const DateRangePicker = ({
     setHoveredDate(null);
   };
 
-  const renderDay = (props: any) => {
+  const renderDay = (props: PickersDayProps<Date>) => {
     const isSelected =
       (dateRange.startDate && isSameDay(props.day, dateRange.startDate)) ||
       (dateRange.endDate && isSameDay(props.day, dateRange.endDate));
@@ -212,13 +248,11 @@ const DateRangePicker = ({
   };
 
   const handleMonthChange = (direction: 'next' | 'previous') => {
-    if (direction === 'previous') {
-      hiddenStartCalendarButtonRef?.current?.click();
-    }
-
-    if (direction === 'next') {
-      hiddenEndCalendarButtonRef?.current?.click();
-    }
+    const buttonRef =
+      direction === 'previous'
+        ? hiddenStartCalendarButtonRef
+        : hiddenEndCalendarButtonRef;
+    buttonRef?.current?.click();
   };
 
   return (
@@ -227,7 +261,12 @@ const DateRangePicker = ({
       ref={fieldsetRef}
       component="fieldset"
       sx={{
-        border: `1px solid ${error ? '#d32f2f' : 'rgba(0, 0, 0, 0.23);'}`,
+        border: (theme) =>
+          `1px solid ${
+            error || errorMessage
+              ? theme.palette.error.main
+              : alpha(theme.palette.common.black, 0.23)
+          }`,
         borderRadius: '4px',
         width: 'fit-content',
         height: '40px',
@@ -245,7 +284,12 @@ const DateRangePicker = ({
             lineHeight: 1,
             fontSize: '12px',
             padding: '2px 4px',
-            color: `${error ? '#d32f2f' : 'rgba(0, 0, 0, 0.6);'}`,
+            color: (theme) =>
+              `${
+                error || errorMessage
+                  ? theme.palette.error.main
+                  : alpha(theme.palette.common.black, 0.6)
+              }`,
             height: '14px',
             float: 'unset',
             position: 'absolute',
@@ -264,7 +308,11 @@ const DateRangePicker = ({
           onChange={(event) => handleStartDateChange(event.target.value)}
           data-testid="start-date-input"
         />
-        <Typography sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>-</Typography>
+        <Typography
+          sx={{ color: (theme) => alpha(theme.palette.common.black, 0.23) }}
+        >
+          -
+        </Typography>
         <DateInput
           ref={endDateInputRef}
           value={endDateInputValue}
@@ -273,15 +321,15 @@ const DateRangePicker = ({
         />
       </Box>
 
-      {error ? (
+      {error || errorMessage ? (
         <FormHelperText
           sx={{
             marginTop: '12px',
             marginLeft: '4px',
-            color: '#d32f2f',
+            color: (theme) => theme.palette.error.main,
           }}
         >
-          {error}
+          {error || errorMessage}
         </FormHelperText>
       ) : null}
 
@@ -307,6 +355,7 @@ const DateRangePicker = ({
                   // value={dateRange.startDate}
                   onChange={handleDateSelection}
                   slots={{
+                    calendarHeader: CustomStartCalendarHeader,
                     day: (date) => renderDay(date),
                     leftArrowIcon: () => (
                       <IconButton
@@ -338,6 +387,7 @@ const DateRangePicker = ({
                   // value={dateRange.endDate}
                   onChange={handleDateSelection}
                   slots={{
+                    calendarHeader: CustomEndCalendarHeader,
                     day: (date) => renderDay(date),
                     leftArrowIcon: () => (
                       <IconButton
@@ -366,6 +416,21 @@ const DateRangePicker = ({
                 />
               </Grid>
             </Grid>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                onClick={() => {
+                  setDateRange({
+                    startDate: null,
+                    endDate: null,
+                  });
+                  setStartDateInputValue('');
+                  setEndDateInputValue('');
+                }}
+              >
+                Clear
+              </Button>
+            </Box>
           </Box>
         </ClickAwayListener>
       </Popover>
