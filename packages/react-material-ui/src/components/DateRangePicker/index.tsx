@@ -262,12 +262,14 @@ const DateRangePicker = ({
           ref={startDateInputRef}
           value={startDateInputValue}
           onChange={(event) => handleStartDateChange(event.target.value)}
+          data-testid="start-date-input"
         />
         <Typography sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>-</Typography>
         <DateInput
           ref={endDateInputRef}
           value={endDateInputValue}
           onChange={(event) => handleEndDateChange(event.target.value)}
+          data-testid="end-date-input"
         />
       </Box>
 
