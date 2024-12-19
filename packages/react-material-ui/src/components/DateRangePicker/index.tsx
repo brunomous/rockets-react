@@ -27,6 +27,7 @@ import {
   endOfDay,
   addMonths,
   addDays,
+  subMonths,
   isBefore,
   isAfter,
 } from 'date-fns';
@@ -48,12 +49,8 @@ export type DateRangePickerProps = {
   label?: string;
   sx?: SxProps;
   error?: string;
+  onRangeUpdate?: (range: DateRange) => void;
 } & FieldsetHTMLAttributes<HTMLFieldSetElement>;
-
-const hiddenButtonSx = {
-  visibility: 'hidden',
-  display: 'none',
-};
 
 const CustomCalendarHeaderRoot = styled('div')({
   display: 'flex',
@@ -62,10 +59,15 @@ const CustomCalendarHeaderRoot = styled('div')({
   alignItems: 'center',
 });
 
-function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
-  const { currentMonth } = props;
+type CustomCalendarHeaderProps = {
+  onActionButtonClick?: () => void;
+} & PickersCalendarHeaderProps<Date>;
 
-  const selectPreviousMonth = () => null;
+function CustomStartCalendarHeader(props: CustomCalendarHeaderProps) {
+  const { currentMonth, onMonthChange } = props;
+
+  const selectPreviousMonth = () =>
+    onMonthChange(subMonths(currentMonth, 1), 'right');
 
   return (
     <CustomCalendarHeaderRoot>
@@ -74,23 +76,20 @@ function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
           <ChevronLeft />
         </IconButton>
       </Stack>
-      <Typography variant="body2">
-        {format(currentMonth, 'MMMM YYYY')}
-      </Typography>
+      <Typography variant="h6">{format(currentMonth, 'MMMM yyyy')}</Typography>
     </CustomCalendarHeaderRoot>
   );
 }
 
-function CustomEndCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
-  const { currentMonth } = props;
+function CustomEndCalendarHeader(props: CustomCalendarHeaderProps) {
+  const { currentMonth, onMonthChange } = props;
 
-  const selectNextMonth = () => null;
+  const selectNextMonth = () =>
+    onMonthChange(addMonths(currentMonth, 1), 'left');
 
   return (
     <CustomCalendarHeaderRoot>
-      <Typography variant="body2">
-        {format(currentMonth, 'MMMM YYYY')}
-      </Typography>
+      <Typography variant="h6">{format(currentMonth, 'MMMM yyyy')}</Typography>
       <Stack spacing={1} direction="row">
         <IconButton onClick={selectNextMonth} title="Next month">
           <ChevronRight />
@@ -100,14 +99,13 @@ function CustomEndCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
   );
 }
 
-const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
+const CustomDateRangePicker = ({
+  label,
+  error,
+  ...props
+}: DateRangePickerProps) => {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
-
-  const hiddenStartCalendarButtonRef = useRef<HTMLButtonElement>(null);
-  const leftArrowButtonRef = useRef<HTMLButtonElement>(null);
-  const hiddenEndCalendarButtonRef = useRef<HTMLButtonElement>(null);
-  const rightArrowButtonRef = useRef<HTMLButtonElement>(null);
-
+  const startCalendarRef = useRef(null);
   const startDateInputRef = useRef<HTMLInputElement>(null);
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
@@ -247,14 +245,6 @@ const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
     );
   };
 
-  const handleMonthChange = (direction: 'next' | 'previous') => {
-    const buttonRef =
-      direction === 'previous'
-        ? hiddenStartCalendarButtonRef
-        : hiddenEndCalendarButtonRef;
-    buttonRef?.current?.click();
-  };
-
   return (
     <Box
       {...props}
@@ -349,28 +339,15 @@ const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
             </Typography>
 
             <Grid container spacing={2}>
-              {/* From Calendar */}
               <Grid item xs={6}>
                 <DateCalendar
-                  // value={dateRange.startDate}
+                  ref={startCalendarRef}
                   onChange={handleDateSelection}
                   slots={{
-                    calendarHeader: CustomStartCalendarHeader,
+                    calendarHeader: (props) => (
+                      <CustomStartCalendarHeader {...props} />
+                    ),
                     day: (date) => renderDay(date),
-                    leftArrowIcon: () => (
-                      <IconButton
-                        ref={leftArrowButtonRef}
-                        onClick={() => handleMonthChange('previous')}
-                      >
-                        <ChevronLeft />
-                      </IconButton>
-                    ),
-                    rightArrowIcon: () => (
-                      <IconButton
-                        ref={hiddenEndCalendarButtonRef}
-                        sx={hiddenButtonSx}
-                      />
-                    ),
                   }}
                   referenceDate={dateRange.startDate || new Date()}
                   minDate={
@@ -381,28 +358,14 @@ const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
                 />
               </Grid>
 
-              {/* To Calendar */}
               <Grid item xs={6}>
                 <DateCalendar
-                  // value={dateRange.endDate}
                   onChange={handleDateSelection}
                   slots={{
-                    calendarHeader: CustomEndCalendarHeader,
+                    calendarHeader: (props) => (
+                      <CustomEndCalendarHeader {...props} />
+                    ),
                     day: (date) => renderDay(date),
-                    leftArrowIcon: () => (
-                      <IconButton
-                        ref={hiddenStartCalendarButtonRef}
-                        sx={hiddenButtonSx}
-                      />
-                    ),
-                    rightArrowIcon: () => (
-                      <IconButton
-                        ref={rightArrowButtonRef}
-                        onClick={() => handleMonthChange('next')}
-                      >
-                        <ChevronRight />
-                      </IconButton>
-                    ),
                   }}
                   referenceDate={addMonths(
                     dateRange.startDate || new Date(),
@@ -438,4 +401,4 @@ const DateRangePicker = ({ label, error, ...props }: DateRangePickerProps) => {
   );
 };
 
-export default DateRangePicker;
+export default CustomDateRangePicker;
