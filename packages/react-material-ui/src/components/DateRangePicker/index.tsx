@@ -59,11 +59,7 @@ const CustomCalendarHeaderRoot = styled('div')({
   alignItems: 'center',
 });
 
-type CustomCalendarHeaderProps = {
-  onActionButtonClick?: () => void;
-} & PickersCalendarHeaderProps<Date>;
-
-function CustomStartCalendarHeader(props: CustomCalendarHeaderProps) {
+function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
   const { currentMonth, onMonthChange } = props;
 
   const selectPreviousMonth = () =>
@@ -81,7 +77,7 @@ function CustomStartCalendarHeader(props: CustomCalendarHeaderProps) {
   );
 }
 
-function CustomEndCalendarHeader(props: CustomCalendarHeaderProps) {
+function CustomEndCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
   const { currentMonth, onMonthChange } = props;
 
   const selectNextMonth = () =>
