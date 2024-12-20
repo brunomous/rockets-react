@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, forwardRef } from 'react';
-import { CustomInput } from './Styles';
+import { CustomInput } from './styles';
 
 type Props = InputHTMLAttributes<HTMLInputElement>;
 

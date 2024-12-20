@@ -33,7 +33,7 @@ import {
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import DateInput from './DateInput';
-import { CustomCalendarHeaderRoot } from './Styles';
+import { CustomCalendarHeaderRoot } from './styles';
 
 interface DateRange {
   startDate: Date | null;
