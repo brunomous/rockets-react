@@ -84,7 +84,7 @@ const DateRangePicker = ({
 
   const handleClose = () => {
     setAnchorEl(null);
-    setHoveredDate(null); // Reset hover state
+    setHoveredDate(null);
   };
 
   const open = Boolean(anchorEl);
@@ -179,7 +179,6 @@ const DateRangePicker = ({
       return prev;
     });
 
-    // Toggle the selection mode after a date is selected
     setDateSelectionMode((prev) =>
       prev === DateSelectionMode.FROM
         ? DateSelectionMode.TO
