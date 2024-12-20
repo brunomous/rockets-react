@@ -46,15 +46,4 @@ describe('DateRangePicker Component', () => {
     expect(startDateInput).toBeInTheDocument();
     expect(endDateInput).toBeInTheDocument();
   });
-
-  // test('should open popover on field click', () => {
-  //   const { getByRole } = render(<DateRangePicker label="Date Range" />);
-  //   const field = getByRole('group');
-
-  //   expect(field).toBeInTheDocument();
-
-  //   fireEvent.click(field);
-
-  //   expect(getByRole('presentation')).toBeInTheDocument();
-  // });
 });
