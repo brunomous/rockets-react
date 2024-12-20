@@ -52,49 +52,15 @@ export type DateRangePickerProps = {
   onRangeUpdate?: (range: DateRange) => void;
 } & FieldsetHTMLAttributes<HTMLFieldSetElement>;
 
-function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
-  const { currentMonth, onMonthChange } = props;
-
-  const selectPreviousMonth = () =>
-    onMonthChange(subMonths(currentMonth, 1), 'right');
-
-  return (
-    <CustomCalendarHeaderRoot>
-      <Stack spacing={1} direction="row">
-        <IconButton onClick={selectPreviousMonth} title="Previous month">
-          <ChevronLeft />
-        </IconButton>
-      </Stack>
-      <Typography variant="h6">{format(currentMonth, 'MMMM yyyy')}</Typography>
-    </CustomCalendarHeaderRoot>
-  );
-}
-
-function CustomEndCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
-  const { currentMonth, onMonthChange } = props;
-
-  const selectNextMonth = () =>
-    onMonthChange(addMonths(currentMonth, 1), 'left');
-
-  return (
-    <CustomCalendarHeaderRoot>
-      <Typography variant="h6">{format(currentMonth, 'MMMM yyyy')}</Typography>
-      <Stack spacing={1} direction="row">
-        <IconButton onClick={selectNextMonth} title="Next month">
-          <ChevronRight />
-        </IconButton>
-      </Stack>
-    </CustomCalendarHeaderRoot>
-  );
-}
-
-const CustomDateRangePicker = ({
+const DateRangePicker = ({
   label,
   error,
+  onRangeUpdate,
   ...props
 }: DateRangePickerProps) => {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
-  const startCalendarRef = useRef(null);
+  const previousMonthButtonRef = useRef<HTMLButtonElement>(null);
+  const nextMonthButtonRef = useRef<HTMLButtonElement>(null);
   const startDateInputRef = useRef<HTMLInputElement>(null);
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
@@ -154,6 +120,13 @@ const CustomDateRangePicker = ({
       startDate: addDays(new Date(date), 1),
     });
     setErrorMessage(isAfterEndDate ? 'Invalid range' : '');
+
+    if (onRangeUpdate) {
+      onRangeUpdate({
+        ...dateRange,
+        startDate: addDays(new Date(date), 1),
+      });
+    }
   };
 
   const handleEndDateChange = (date: string) => {
@@ -167,6 +140,13 @@ const CustomDateRangePicker = ({
       endDate: addDays(new Date(date), 1),
     });
     setErrorMessage(isBeforeStartDate ? 'Invalid range' : '');
+
+    if (onRangeUpdate) {
+      onRangeUpdate({
+        ...dateRange,
+        startDate: addDays(new Date(date), 1),
+      });
+    }
   };
 
   const handleDateSelection = (date: Date | null) => {
@@ -177,6 +157,10 @@ const CustomDateRangePicker = ({
         setErrorMessage(isAfterEndDate ? 'Invalid range' : '');
         setStartDateInputValue(date ? format(date, 'yyyy-MM-dd') : '');
 
+        if (onRangeUpdate) {
+          onRangeUpdate({ ...prev, startDate: date });
+        }
+
         return { ...prev, startDate: date };
       } else if (dateSelectionMode === DateSelectionMode.TO) {
         const isBeforeStartDate =
@@ -184,6 +168,10 @@ const CustomDateRangePicker = ({
 
         setErrorMessage(isBeforeStartDate ? 'Invalid range' : '');
         setEndDateInputValue(date ? format(date, 'yyyy-MM-dd') : '');
+
+        if (onRangeUpdate) {
+          onRangeUpdate({ ...prev, endDate: date });
+        }
 
         return { ...prev, endDate: date };
       }
@@ -198,6 +186,22 @@ const CustomDateRangePicker = ({
         : DateSelectionMode.FROM,
     );
     setHoveredDate(null);
+  };
+
+  const onClearButtonClick = () => {
+    setDateRange({
+      startDate: null,
+      endDate: null,
+    });
+    setStartDateInputValue('');
+    setEndDateInputValue('');
+
+    if (onRangeUpdate) {
+      onRangeUpdate({
+        startDate: null,
+        endDate: null,
+      });
+    }
   };
 
   const renderDay = (props: PickersDayProps<Date>) => {
@@ -323,19 +327,57 @@ const CustomDateRangePicker = ({
       >
         <ClickAwayListener onClickAway={handleClose}>
           <Box sx={{ padding: 2 }}>
-            <Typography variant="h6" gutterBottom>
+            <Typography
+              variant="h6"
+              sx={{ marginLeft: '12px', marginBottom: '16px' }}
+            >
               Select Date Range
             </Typography>
 
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <DateCalendar
-                  ref={startCalendarRef}
                   onChange={handleDateSelection}
                   slots={{
-                    calendarHeader: (props) => (
-                      <CustomStartCalendarHeader {...props} />
-                    ),
+                    calendarHeader: (
+                      props: PickersCalendarHeaderProps<Date>,
+                    ) => {
+                      const { currentMonth, onMonthChange } = props;
+
+                      const selectPreviousMonth = () => {
+                        onMonthChange(subMonths(currentMonth, 1), 'right');
+                        previousMonthButtonRef?.current?.click();
+                      };
+
+                      const selectNextMonth = () =>
+                        onMonthChange(addMonths(currentMonth, 1), 'left');
+
+                      return (
+                        <CustomCalendarHeaderRoot>
+                          <Stack spacing={1} direction="row">
+                            <IconButton
+                              onClick={selectPreviousMonth}
+                              title="Previous month"
+                            >
+                              <ChevronLeft />
+                            </IconButton>
+                            <IconButton
+                              ref={nextMonthButtonRef}
+                              onClick={selectNextMonth}
+                              sx={{
+                                display: 'none',
+                              }}
+                            />
+                          </Stack>
+                          <Typography
+                            variant="h6"
+                            sx={{ marginRight: '14px ' }}
+                          >
+                            {format(currentMonth, 'MMMM yyyy')}
+                          </Typography>
+                        </CustomCalendarHeaderRoot>
+                      );
+                    },
                     day: (date) => renderDay(date),
                   }}
                   referenceDate={dateRange.startDate || new Date()}
@@ -344,6 +386,14 @@ const CustomDateRangePicker = ({
                       ? dateRange.startDate || undefined
                       : undefined
                   }
+                  sx={{
+                    '.MuiDayCalendar-header': {
+                      justifyContent: 'space-between',
+                    },
+                    '.MuiDayCalendar-weekContainer': {
+                      justifyContent: 'space-between',
+                    },
+                  }}
                 />
               </Grid>
 
@@ -351,9 +401,42 @@ const CustomDateRangePicker = ({
                 <DateCalendar
                   onChange={handleDateSelection}
                   slots={{
-                    calendarHeader: (props) => (
-                      <CustomEndCalendarHeader {...props} />
-                    ),
+                    calendarHeader: (
+                      props: PickersCalendarHeaderProps<Date>,
+                    ) => {
+                      const { currentMonth, onMonthChange } = props;
+
+                      const selectNextMonth = () => {
+                        onMonthChange(addMonths(currentMonth, 1), 'left');
+                        nextMonthButtonRef?.current?.click();
+                      };
+
+                      const selectPreviousMonth = () =>
+                        onMonthChange(subMonths(currentMonth, 1), 'right');
+
+                      return (
+                        <CustomCalendarHeaderRoot>
+                          <Typography variant="h6" sx={{ marginLeft: '14px ' }}>
+                            {format(currentMonth, 'MMMM yyyy')}
+                          </Typography>
+                          <Stack spacing={1} direction="row">
+                            <IconButton
+                              ref={previousMonthButtonRef}
+                              onClick={selectPreviousMonth}
+                              sx={{
+                                display: 'none',
+                              }}
+                            />
+                            <IconButton
+                              onClick={selectNextMonth}
+                              title="Next month"
+                            >
+                              <ChevronRight />
+                            </IconButton>
+                          </Stack>
+                        </CustomCalendarHeaderRoot>
+                      );
+                    },
                     day: (date) => renderDay(date),
                   }}
                   referenceDate={addMonths(
@@ -365,23 +448,20 @@ const CustomDateRangePicker = ({
                       ? dateRange.startDate || undefined
                       : undefined
                   }
+                  sx={{
+                    '.MuiDayCalendar-header': {
+                      justifyContent: 'space-between',
+                    },
+                    '.MuiDayCalendar-weekContainer': {
+                      justifyContent: 'space-between',
+                    },
+                  }}
                 />
               </Grid>
             </Grid>
 
             <Box display="flex" justifyContent="end" width="100%">
-              <Button
-                onClick={() => {
-                  setDateRange({
-                    startDate: null,
-                    endDate: null,
-                  });
-                  setStartDateInputValue('');
-                  setEndDateInputValue('');
-                }}
-              >
-                Clear
-              </Button>
+              <Button onClick={onClearButtonClick}>Clear</Button>
             </Box>
           </Box>
         </ClickAwayListener>
@@ -390,4 +470,4 @@ const CustomDateRangePicker = ({
   );
 };
 
-export default CustomDateRangePicker;
+export default DateRangePicker;
