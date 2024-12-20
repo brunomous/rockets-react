@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-export const CustomInput = styled('input')(({}) => ({
+export const CustomInput = styled('input')({
   border: 'none',
   textAlign: 'center',
   textTransform: 'uppercase',
@@ -14,4 +14,4 @@ export const CustomInput = styled('input')(({}) => ({
   '&::-moz-calendar-picker-indicator': {
     display: 'none',
   },
-}));
+});

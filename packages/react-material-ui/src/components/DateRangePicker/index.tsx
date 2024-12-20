@@ -12,7 +12,6 @@ import {
   Stack,
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
 import {
   DateCalendar,
   PickersDay,
@@ -34,6 +33,7 @@ import {
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import DateInput from './DateInput';
+import { CustomCalendarHeaderRoot } from './Styles';
 
 interface DateRange {
   startDate: Date | null;
@@ -51,13 +51,6 @@ export type DateRangePickerProps = {
   error?: string;
   onRangeUpdate?: (range: DateRange) => void;
 } & FieldsetHTMLAttributes<HTMLFieldSetElement>;
-
-const CustomCalendarHeaderRoot = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: '8px 16px',
-  alignItems: 'center',
-});
 
 function CustomStartCalendarHeader(props: PickersCalendarHeaderProps<Date>) {
   const { currentMonth, onMonthChange } = props;
