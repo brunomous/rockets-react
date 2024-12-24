@@ -4,13 +4,7 @@
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import { render, fireEvent, getByRole } from '@testing-library/react';
-import {
-  LocalizationProvider,
-  MuiPickersAdapter,
-  MuiPickersAdapterContext,
-} from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { render } from '@testing-library/react';
 import DateRangePicker from '../src/components/DateRangePicker';
 
 describe('DateRangePicker Component', () => {
@@ -45,5 +39,22 @@ describe('DateRangePicker Component', () => {
     expect(legend).toBeInTheDocument();
     expect(startDateInput).toBeInTheDocument();
     expect(endDateInput).toBeInTheDocument();
+  });
+
+  test('should set input values when prop is passed', () => {
+    const { getByTestId } = render(
+      <DateRangePicker
+        label="Date Range"
+        value={{
+          startDate: new Date('2024-12-10T18:34:37.172Z'),
+          endDate: new Date('2025-01-08T18:34:37.172Z'),
+        }}
+      />,
+    );
+    const startDateInput = getByTestId('start-date-input');
+    const endDateInput = getByTestId('end-date-input');
+
+    expect(startDateInput).toHaveValue('2024-12-10');
+    expect(endDateInput).toHaveValue('2025-01-08');
   });
 });
