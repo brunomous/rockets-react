@@ -8,6 +8,7 @@ import {
 } from '../../../components/Filter';
 import { SelectOption } from '../../../components/SelectField/SelectField';
 import { useCrudRoot, FilterValues } from '../../../modules/crud/useCrudRoot';
+import { DateRange } from '../../../components/DateRangePicker';
 
 type Operator =
   | 'eq'
@@ -140,7 +141,7 @@ const FilterSubmodule = (props: Props) => {
 
   const onFilterChange = (
     id: string,
-    value: string | string[] | Date | null,
+    value: string | string[] | Date | null | DateRange,
     updateFilter?: boolean,
     reference?: FilterDetails['reference'],
     referenceValidationFn?: FilterDetails['referenceValidationFn'],
@@ -263,6 +264,15 @@ const FilterSubmodule = (props: Props) => {
             onFilterChange(id, val, false, reference, referenceValidationFn),
           onDebouncedSearchChange: (val: Date | null) =>
             onFilterChange(id, val, true, reference, referenceValidationFn),
+        };
+
+      case 'dateRange':
+        return {
+          ...commonFields,
+          type,
+          value: value as DateRange,
+          onRangeUpdate: (dateRange: DateRange) =>
+            onFilterChange(id, dateRange, true),
         };
 
       default:

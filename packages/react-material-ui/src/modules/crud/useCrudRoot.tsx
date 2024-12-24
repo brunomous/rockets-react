@@ -2,8 +2,12 @@ import { createContext, useContext } from 'react';
 import { UseTableResult } from '../../components/Table/useTable';
 import { Search, SimpleFilter } from '../../components/Table/types';
 import { FilterDetails } from '../../components/submodules/Filter';
+import { DateRange } from '../../components/DateRangePicker';
 
-export type FilterValues = Record<string, string | string[] | Date | null>;
+export type FilterValues = Record<
+  string,
+  string | string[] | Date | null | DateRange
+>;
 
 export type CrudContextProps = {
   /**

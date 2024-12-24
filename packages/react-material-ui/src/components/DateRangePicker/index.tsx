@@ -1,4 +1,9 @@
-import React, { useState, useRef, FieldsetHTMLAttributes } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  FieldsetHTMLAttributes,
+} from 'react';
 import {
   Box,
   Popover,
@@ -35,7 +40,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight';
 import DateInput from './DateInput';
 import { CustomCalendarHeaderRoot } from './styles';
 
-interface DateRange {
+export interface DateRange {
   startDate: Date | null;
   endDate: Date | null;
 }
@@ -46,7 +51,9 @@ enum DateSelectionMode {
 }
 
 export type DateRangePickerProps = {
+  type?: string;
   label?: string;
+  value?: DateRange;
   sx?: SxProps;
   error?: string;
   onRangeUpdate?: (range: DateRange) => void;
@@ -55,6 +62,7 @@ export type DateRangePickerProps = {
 const DateRangePicker = ({
   label,
   error,
+  value,
   onRangeUpdate,
   ...props
 }: DateRangePickerProps) => {
@@ -203,6 +211,30 @@ const DateRangePicker = ({
     }
   };
 
+  useEffect(() => {
+    if (value?.startDate && !startDateInputValue) {
+      setStartDateInputValue(format(value.startDate, 'yyyy-MM-dd'));
+    }
+
+    if (value?.startDate && !dateRange.startDate) {
+      setDateRange({
+        ...dateRange,
+        startDate: new Date(value.startDate),
+      });
+    }
+
+    if (value?.endDate && !endDateInputValue) {
+      setEndDateInputValue(format(value.endDate, 'yyyy-MM-dd'));
+    }
+
+    if (value?.endDate && !dateRange.endDate) {
+      setDateRange({
+        ...dateRange,
+        endDate: new Date(value.endDate),
+      });
+    }
+  }, [value, dateRange]);
+
   const renderDay = (props: PickersDayProps<Date>) => {
     const isSelected =
       (dateRange.startDate && isSameDay(props.day, dateRange.startDate)) ||
@@ -250,7 +282,6 @@ const DateRangePicker = ({
               : alpha(theme.palette.common.black, 0.23)
           }`,
         borderRadius: '4px',
-        width: 'fit-content',
         height: '40px',
         fontSize: '1rem',
         padding: '8px',
@@ -283,7 +314,7 @@ const DateRangePicker = ({
         </Typography>
       )}
 
-      <Box display="flex">
+      <Box display="flex" alignItems="center" justifyContent="center">
         <DateInput
           ref={startDateInputRef}
           value={startDateInputValue}

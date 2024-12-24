@@ -16,6 +16,9 @@ import { SearchFieldProps } from '../../components/SearchField/SearchField';
 import { OrderableDropDown, ListItem } from '../OrderableDropDown';
 import { DatePickerProps } from '@mui/x-date-pickers';
 import DatePickerField from '../../components/DatePickerField';
+import DateRangePicker, {
+  DateRangePickerProps,
+} from '../../components/DateRangePicker';
 
 /**
  * Type of filter variants available.
@@ -25,7 +28,8 @@ export type FilterVariant =
   | 'autocomplete'
   | 'select'
   | 'multiSelect'
-  | 'date';
+  | 'date'
+  | 'dateRange';
 
 /**
  * Common properties for all filters.
@@ -63,6 +67,16 @@ type DateFilter = {
   onDebouncedSearchChange?: (value: Date) => void;
 } & FilterCommon &
   DatePickerProps<Date>;
+
+/**
+ * Properties for the date range filter.
+ */
+type DateRangeFilter = {
+  type: 'dateRange';
+  onChange?: (value: Date | null) => void;
+  onDebouncedSearchChange?: (value: Date) => void;
+} & FilterCommon &
+  DateRangePickerProps;
 
 /**
  * Properties for the autocomplete filter.
@@ -110,6 +124,7 @@ type MultiSelectFilter = {
 export type FilterType =
   | TextFilter
   | DateFilter
+  | DateRangeFilter
   | AutocompleteFilter
   | SelectFilter
   | MultiSelectFilter;
@@ -153,6 +168,15 @@ const renderComponent = (filter: FilterType) => {
           onDebouncedSearchChange={filter.onDebouncedSearchChange}
           minDate={filter.minDate}
           maxDate={filter.maxDate}
+        />
+      );
+
+    case 'dateRange':
+      return (
+        <DateRangePicker
+          label={filter.label}
+          value={filter.value}
+          onRangeUpdate={filter.onRangeUpdate}
         />
       );
 
