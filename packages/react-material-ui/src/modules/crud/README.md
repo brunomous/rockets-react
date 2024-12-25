@@ -134,6 +134,12 @@ To filter table items, the `filters` prop can be passed to the `tableProps` obje
         ],
         columns: 3,
       },
+      {
+        id: 'range',
+        label: 'Date range',
+        type: 'dateRange',
+        columns: 4,
+      },
     ],
   }}
 />
@@ -147,8 +153,36 @@ Each filter can have the following set of attributes:
 - `columns`: number of columns occupied by the input in a grid of 12 columns;
 - `size`: overall size of the input, small or medium;
 - `operator`: string that describes how much of the input value should match the data value;
-- `type`: the type of the filter input, one of text, autocomplete or select;
+- `type`: the type of the filter input, one of text, autocomplete, select, multiSelect, date and dateRange;
 - `options`: array of options displayed in the autocomplete or select inputs.
+
+### Filter types
+
+#### text
+
+Simple text field, filtering data based on a single string.
+
+#### autocomplete
+
+Select field with the ability to search the items listed based on a text field.
+
+### select
+
+Standard select field, filtering data based on a selected option.
+
+### multiSelect
+
+Another approach to the Select field, with the ability to select multiple items.
+
+### date
+
+Standard date picker, filtering data based on a timestamp value.
+
+### dateRange
+
+Another approach to the date picker, with the ability to select start and end date through a single field.
+
+## External search
 
 A callback can be passed to the module props if the current state of filters is needed after each input change. This callback is called `filterCallback` and is passed outside of the `tableProps`, as follows:
 
