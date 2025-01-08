@@ -1,6 +1,6 @@
 {
   "name": "@concepta/react-data-viz",
-  "version": "2.0.0-alpha.21",
+  "version": "2.0.0-alpha.22",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "BSD-3-Clause",
@@ -21,20 +21,20 @@
   "optionalDependencies": {
     "@cubejs-client/core": "^1.0.0",
     "@cubejs-client/react": "^1.0.0",
-    "react-leaflet": "^4.0.0",
     "@react-leaflet/core": "^2.0.0",
     "leaflet": "^1.8.0",
-    "leaflet.markercluster": "^1.5.3"
+    "leaflet.markercluster": "^1.5.3",
+    "react-leaflet": "^4.0.0"
   },
   "peerDependencies": {
     "@cubejs-client/core": "^1.0.0",
     "@cubejs-client/react": "^1.0.0",
-    "react-leaflet": "^4.0.0",
     "@react-leaflet/core": "^2.0.0",
     "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.0.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1",
