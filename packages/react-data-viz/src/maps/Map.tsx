@@ -1,7 +1,7 @@
+import { PropsWithChildren } from 'react';
 import { MapContainer, MapContainerProps, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
-import { PropsWithChildren } from 'react';
 import { LatLngTuple } from 'leaflet';
 
 const GLOBE_CENTER: LatLngTuple = [0, 0];
