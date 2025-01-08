@@ -21,20 +21,20 @@
   "optionalDependencies": {
     "@cubejs-client/core": "^1.0.0",
     "@cubejs-client/react": "^1.0.0",
-    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.0.0",
+    "@react-leaflet/core": "^2.0.0",
+    "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3"
   },
   "peerDependencies": {
     "@cubejs-client/core": "^1.0.0",
     "@cubejs-client/react": "^1.0.0",
-    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.0.0",
+    "@react-leaflet/core": "^2.0.0",
+    "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "dependencies": {
-    "@react-leaflet/core": "^3.0.0",
-    "react-leaflet": "4.2.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1",

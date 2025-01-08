@@ -14,20 +14,22 @@ type Position = {
 export type MapMarkerClusterProps = {
   data: Position[];
   markerClusterProps?: MarkerClusterGroupOptions;
+  loading?: boolean;
 } & MapContainerProps;
 
 const MapMarkerCluster = ({
   data,
   markerClusterProps,
+  loading = false,
   ...props
 }: MapMarkerClusterProps) => (
   <Map {...props}>
     <MarkerClusterGroup showCoverageOnHover={false} {...markerClusterProps}>
-      {data.map((address, index) => {
+      {data?.map((address, index) => {
         const { lat, lon } = address;
 
         // Loose equality to check for `undefined` or `null`
-        if (lat == undefined || lon == undefined) {
+        if (lat == undefined || lon == undefined || loading) {
           return null;
         }
 
