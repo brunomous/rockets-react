@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Navigate } from 'react-router';
-import { AuthModule, AuthModuleProps } from '@concepta/react-material-ui/';
+import { AuthModule, AuthModuleProps } from '@concepta/react-material-ui';
 import { toast } from 'react-toastify';
 
 type Route = 'signIn' | 'signUp' | 'forgotPassword' | 'resetPassword';

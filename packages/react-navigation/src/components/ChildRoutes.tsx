@@ -5,7 +5,7 @@ import {
   AuthModuleProps,
   DrawerProps,
   NavbarProps,
-} from '@concepta/react-material-ui/';
+} from '@concepta/react-material-ui';
 
 import DefaultRoute from './DefaultRoute';
 import AuthRoute from './AuthRoute';
@@ -128,6 +128,7 @@ const ChildRoutes = ({
           name={child.props.name}
           showAppBar={child.props.showAppBar}
           module={child.props.module}
+          isFormPage={child.props.isFormPage}
           page={child.props.page}
           items={items}
           drawerProps={{

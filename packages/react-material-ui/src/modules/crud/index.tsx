@@ -87,7 +87,7 @@ export interface ModuleProps {
   hideBreadcrumb?: boolean;
   resource: string;
   tableProps: TableProps;
-  formContainerVariation?: 'drawer' | 'modal';
+  formContainerVariation?: 'drawer' | 'modal' | 'page';
   additionalTableContent?: ReactNode;
   detailsFormProps?: PropsWithChildren<FormProps>;
   createFormProps?: PropsWithChildren<FormProps>;
@@ -296,12 +296,22 @@ const CrudModule = (props: ModuleProps) => {
         <TableSubmodule
           queryResource={props.resource}
           onAction={(payload) => {
+            if (props.formContainerVariation === 'page') {
+              props.navigate(
+                `/${props.resource}/${payload.action}/${payload.row.id}`,
+              );
+            }
+
             setSelectedRow(payload.row);
             setDrawerViewMode(payload.action);
             setCurrentViewIndex(payload.index);
             setFormVisible(true);
           }}
           onAddNew={() => {
+            if (props.formContainerVariation === 'page') {
+              props.navigate(`/${props.resource}/new`);
+            }
+
             setSelectedRow(null);
             setDrawerViewMode('creation');
             setFormVisible(true);

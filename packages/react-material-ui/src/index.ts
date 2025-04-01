@@ -65,7 +65,7 @@ export { default as SearchField } from './components/SearchField';
 export { default as AutocompleteField } from './components/AutocompleteField';
 export { SelectField, SelectFieldProps } from './components/SelectField';
 export { MultiSelect, MultiSelectProps } from './components/MultiSelect';
-export { default as SimpleForm } from './components/SimpleForm';
+export { default as SimpleForm, FormType } from './components/SimpleForm';
 export {
   Filter,
   FilterVariant,
@@ -81,8 +81,9 @@ export {
 } from './components/FormFieldSkeleton';
 
 export { AuthModule, AuthModuleProps } from './modules/auth';
-export { default as CrudModule } from './modules/crud';
+export { default as CrudModule, ModuleProps } from './modules/crud';
 export { default as UsersModule } from './modules/users';
+export { default as FormModule } from './modules/form';
 
 export { default as OtpInput } from './components/OtpInput';
 

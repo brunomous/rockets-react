@@ -1,17 +1,17 @@
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
-import { ModuleProps } from '@concepta/react-material-ui/dist/modules/crud';
-import { DrawerItemProps } from '@concepta/react-material-ui';
+import { ModuleProps } from '@concepta/react-material-ui';
 
 type ResourceProps = {
   id: string;
-  name: string;
-  icon: DrawerItemProps['icon'];
+  name?: string;
+  icon?: ReactNode;
   showDrawerItem?: boolean;
   isUnprotected?: boolean;
   showAppBar?: boolean;
   module?: Partial<ModuleProps>;
   page?: ReactNode;
+  isFormPage?: boolean;
 };
 
 const Resource = ({ id }: ResourceProps) => {

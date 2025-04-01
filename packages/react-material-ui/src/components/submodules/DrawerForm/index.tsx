@@ -15,6 +15,7 @@ import { SchemaForm } from '../../../components/SchemaForm';
 import { CustomTextFieldWidget } from '../../../styles/CustomWidgets';
 import { FormSubmoduleProps } from '../types/Form';
 import TableRowControls from '../TableRowControls';
+import ConfirmationModal from '../ConfirmationModal';
 
 const DrawerFormSubmodule = (props: FormSubmoduleProps) => {
   const {
@@ -47,6 +48,8 @@ const DrawerFormSubmodule = (props: FormSubmoduleProps) => {
 
   const [fieldValues, setFieldValues] =
     useState<FormSubmoduleProps['formData']>(formData);
+  const [isConfirmationModalOpen, setConfirmationModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setFieldValues(formData);
@@ -158,7 +161,7 @@ const DrawerFormSubmodule = (props: FormSubmoduleProps) => {
             <Button
               variant="contained"
               color="error"
-              onClick={() => deleteItem(formData)}
+              onClick={() => setConfirmationModalOpen(true)}
               sx={{ flex: 1 }}
             >
               {isLoadingDelete ? (
@@ -293,6 +296,14 @@ const DrawerFormSubmodule = (props: FormSubmoduleProps) => {
           </SchemaForm.Form>
         )}
       </Box>
+      <ConfirmationModal
+        isOpen={isConfirmationModalOpen}
+        onClose={() => setConfirmationModalOpen(false)}
+        onConfirm={() => {
+          setConfirmationModalOpen(false);
+          deleteItem(formData);
+        }}
+      />
     </Drawer>
   );
 };
